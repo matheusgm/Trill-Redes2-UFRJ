@@ -21,8 +21,8 @@
             min-height: 75%;
         }
 
-        .menu {
-            display: none;
+        .w3-content p {
+            text-align: justify;
         }
     </style>
 </head>
@@ -51,7 +51,7 @@
                 <a href="#question_answer" class="w3-button w3-block w3-black">Q&A</a>
             </div>
             <div class="w3-col s2">
-                <a href="#referencias" class="w3-button w3-block w3-black">Referencias</a>
+                <a href="#referencias" class="w3-button w3-block w3-black">REFERÊNCIAS</a>
             </div>
         </div>
     </div>
@@ -62,7 +62,7 @@
             <span class="w3-text-white">Redes de Computadores II - UFRJ</span>
         </div>
         <div class="w3-display-middle w3-center">
-            <span class="w3-text-white" style="font-size:90px">Transparent Interconnection of Lots of Links</span>
+            <span class="w3-text-white" style="font-size:60px">Transparent Interconnection of Lots of Links</span>
         </div>
         <div class="w3-display-bottomright w3-center w3-padding-large">
             <span class="w3-text-white">Prof: Luís Henrique M. K. Costa</span>
@@ -74,79 +74,174 @@
 
         <!-- Introdução Container -->
         <div class="w3-container" id="introducao">
-            <div class="w3-content" style="max-width:700px">
+            <div class="w3-content w3-padding-48" style="max-width:900px">
 
-                <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">Introdução</span></h5>
+                <h2 class="w3-center"><span class="w3-wide"><b>Introdução</b></span></h2>
+                <hr style="width:100px;border:5px solid black" class="w3-round">
+                <p>Na camada 2 da internet foi criado o chamado STP (Spanning Tree Protocol) para se ter caminhos
+                    redundantes. Esse protocolo bloqueia dinamicamente alguns enlaces da rede para que não tenha loops
+                    na topologia. Entretanto, o STP tinha a desvantagem de que o enlace bloqueado acabava sendo uma
+                    largura de banda desperdiçada, ou seja, que era paga e não era utilizada. Com isso e apesar de terem
+                    melhorado o protocolo e criado o RSTP (Rapid Spanning Tree Protocol) e o MSTP (Multiple Spanning
+                    Tree Protocol), essa melhoria não foi suficiente para evitar alguns problemas de escalabilidade,
+                    pois em alguns casos ainda estaríamos não utilizando a largura de banda de alguns enlaces
+                    bloqueados.
+                </p>
+                <p>Dessa forma, foi criado o TRILL (Transparent Interconnection of Lots of Links) como uma tecnologia
+                    de substituição de todas as versões do STP. Esse protocolo foi projetado para ser um protocolo de
+                    rede local, para fornecer encaminhamento eficiente e escalabilidade em redes Ethernet.
+                </p>
             </div>
         </div>
 
         <!-- O Protocolo Container -->
         <div class="w3-container" id="o_protocolo">
-            <div class="w3-content" style="max-width:700px">
-                <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">O Protocolo</span></h5>
-
-
-                <p>The Cafe was founded in blabla by Mr. Smith in lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
-                <p>In addition to our full espresso and brew bar menu, we serve fresh made-to-order breakfast and lunch
-                    sandwiches, as well as a selection of sides and salads and other good stuff.</p>
+            <div class="w3-content w3-padding-48" style="max-width:900px">
+                <h2 class="w3-center"><span class="w3-wide"><b>O Protocolo</b></span></h2>
+                <hr style="width:100px;border:5px solid black" class="w3-round">
+                <p>
+                    O segredo por trás desse protocolo é trazer de volta uma específica inteligência de roteador chamado
+                    IS-IS (Intermediate System to Intermediate System) que é um protocolo de roteador particular que
+                    perdeu lugar para o OSPF (Open Shortest Path First). Muitos dizem que o TRILL é um roteamento de
+                    endereço MAC movendo tráfego de switch para switch utilizando a tecnologia de caminho mais curto que
+                    é encontrado no IS-IS. Esse protocolo foi escolhido pois ele roda na camada 2 e, portanto, não é
+                    necessário configurar os roteadores IS-IS com endereços IP para se configurarem entre eles. Além
+                    disso, o cabeçalho é de tamanho flexível, chamado de TLV (Type-Legth-Value), sendo um protocolo de
+                    fácil extensão. Todos os enlaces estão conectados e ativos, não tendo nenhum bloqueio com roteamento
+                    na camada 2, graças a esse protocolo.
+                </p>
                 <!-- <img src="./img/computer_networking.jpg" style="width:100%;max-width:1000px" class="w3-margin-top">
                 <p><strong>Opening hours:</strong> everyday from 6am to 5pm.</p>
                 <p><strong>Address:</strong> 15 Adr street, 5015, NY</p> -->
-            </div>
-        </div>
 
-        <div class="w3-container">
-            <div class="w3-content" style="max-width:700px">
-                <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">RBridges</span></h5>
+                <div class="w3-content" style="max-width:900px">
+                    <h5 class="w3-center w3-padding-24"><span class="w3-wide"><b>RBridges</b></span></h5>
+                    <p>
+                        RBridges, ou Routing Bridges, foram criados para operar com o protocolo TRILL, e vieram para
+                        resolver limitações que as tradicionais pontes transparentes e switches enfrentam, especialmente
+                        em ambientes de rede grandes e complexos.
+                    </p>
+                    <p>
+                        As redes Ethernet têm crescido em complexidade e tamanho ao longo dos anos. Isso tornou os
+                        métodos tradicionais de roteamento e comutação de camada 2 menos eficientes. As técnicas
+                        clássicas, como o protocolo Spanning Tree, têm o efeito indesejado de desativar caminhos
+                        redundantes na rede para evitar loops, reduzindo assim a utilização do enlace e a
+                        disponibilidade. RBridges foram introduzidos para abordar essas deficiências.
+                        Diferentemente do Spanning Tree, que desativa links redundantes, o protocolo TRILL permite que
+                        os RBridges utilizem todos os caminhos disponíveis para roteamento. Isso não apenas aumenta a
+                        eficiência da largura de banda, mas tamb
 
-            </div>
-        </div>
+                    </p>
 
-        <div class="w3-container">
-            <div class="w3-content" style="max-width:700px">
-                <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">Cabeçalho</span></h5>
+                </div>
+                <div class="w3-content" style="max-width:900px">
+                    <h5 class="w3-center w3-padding-24"><span class="w3-wide"><b>Cabeçalho</b></span></h5>
 
-            </div>
-        </div>
+                    <img src="./img/cabecalho1.png" style="width:100%;max-width:1000px; border:2px solid black"
+                        class="w3-margin-top">
 
-        <div class="w3-container">
-            <div class="w3-content" style="max-width:700px">
-                <h5 class="w3-center w3-padding-64"><span class="w3-tag w3-wide">Funcionamento</span></h5>
+                    <img src="./img/cabecalho2.png" style="width:100%;max-width:1000px; border:2px solid black"
+                        class="w3-margin-top">
+                </div>
+                <div class="w3-content" style="max-width:900px">
+                    <h5 class="w3-center w3-padding-24"><span class="w3-wide"><b>Funcionamento</b></span></h5>
+
+                </div>
 
             </div>
         </div>
 
         <!-- Utilização Container -->
         <div class="w3-container" id="utilizacao">
-            <div class="w3-content" style="max-width:700px">
+            <div class="w3-content w3-padding-48" style="max-width:900px">
 
-                <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">Utilização</span></h5>
+                <h2 class="w3-center"><span class="w3-wide"><b>Utilização</b></span></h2>
+                <hr style="width:100px;border:5px solid black" class="w3-round">
             </div>
         </div>
 
         <!-- Conclusao Container -->
         <div class="w3-container" id="conclusao">
-            <div class="w3-content" style="max-width:700px">
+            <div class="w3-content w3-padding-48" style="max-width:900px">
 
-                <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">Conclusão</span></h5>
+                <h2 class="w3-center"><span class="w3-wide"><b>Conclusão</b></span></h2>
+                <hr style="width:100px;border:5px solid black" class="w3-round">
 
             </div>
         </div>
 
         <!-- Q&A Container -->
         <div class="w3-container" id="question_answer">
-            <div class="w3-content" style="max-width:700px">
+            <div class="w3-content w3-padding-48" style="max-width:900px">
 
-                <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">Questions & Answers</span></h5>
+                <h2 class="w3-center"><span class="w3-wide"><b>Questions & Answers</b></span></h2>
+                <hr style="width:100px;border:5px solid black" class="w3-round">
+
+                <div class="w3-container">
+                    <h5 class="w3-opacity"><b>Q1. Qual era a desvantagem do protocolo STP, que fez com que criassem o
+                            protocolo TRILL?</b></h5>
+                    <div onclick="openMenu(event, 'Q1');" id="Q1" style="cursor: pointer;">
+                        <div class="w3-card" style="background-color: #f1f1f1;">
+                            <p style="display: none; padding: 16px;">A: No STP o enlace bloqueado acabava sendo uma largura de banda desperdiçada, ou seja,
+                                que era paga e não era utilizada. Já com o TRILL, é aproveitado a largura de banda de
+                                todos os enlaces.
+                            </p>
+                            <p class="w3-center" style="padding: 16px;"><b>Answer</b></p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="w3-container">
+                    <h5 class="w3-opacity"><b>Q2.</b></h5>
+                    <div onclick="openMenu(event, 'Q2');" id="Q2" style="cursor: pointer;">
+                        <div class="w3-card" style="background-color: #f1f1f1;">
+                            <p style="display: none; padding: 16px;">A:
+                            </p>
+                            <p class="w3-center" style="padding: 16px;"><b>Answer</b></p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="w3-container">
+                    <h5 class="w3-opacity"><b>Q3.</b></h5>
+                    <div onclick="openMenu(event, 'Q3');" id="Q3" style="cursor: pointer;">
+                        <div class="w3-card" style="background-color: #f1f1f1;">
+                            <p style="display: none; padding: 16px;">A:
+                            </p>
+                            <p class="w3-center" style="padding: 16px;"><b>Answer</b></p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="w3-container">
+                    <h5 class="w3-opacity"><b>Q4. Qual era a desvantagem do protocolo STP, que fez com que criassem o
+                            protocolo TRILL?</b></h5>
+                    <div onclick="openMenu(event, 'Q4');" id="Q4" style="cursor: pointer;">
+                        <div class="w3-card" style="background-color: #f1f1f1;">
+                            <p style="display: none; padding: 16px;">A:
+                            </p>
+                            <p class="w3-center" style="padding: 16px;"><b>Answer</b></p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="w3-container">
+                    <h5 class="w3-opacity"><b>Q5. </b></h5>
+                    <div onclick="openMenu(event, 'Q5');" id="Q5" style="cursor: pointer;">
+                        <div class="w3-card" style="background-color: #f1f1f1;">
+                            <p style="display: none; padding: 16px;">A: No
+                            </p>
+                            <p class="w3-center" style="padding: 16px;"><b>Answer</b></p>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
         <!-- Referencias Container -->
         <div class="w3-container" id="referencias">
-            <div class="w3-content" style="max-width:700px">
-                <h5 class="w3-center w3-padding-48"><span class="w3-tag w3-wide">Referências Bibliográficas</span></h5>
+            <div class="w3-content w3-padding-48" style="max-width:500px">
+                <h2 class="w3-center"><span class="w3-wide"><b>Referências Bibliográficas</b></span></h2>
 
                 <p>1. <a
                         href="https://datatracker.ietf.org/wg/trill/documents/">https://datatracker.ietf.org/wg/trill/documents/</a>
@@ -180,7 +275,7 @@
             </div>
         </div>
 
-       
+
 
         <!-- End page content -->
     </div>
@@ -192,7 +287,25 @@
         <p>Gabriel Bastos</p>
         <p>Matheus Guimarães de Moura</p>
     </footer>
-
+    <script>
+        // Tabbed Menu
+        function openMenu(evt, id) {
+            let element = document.getElementById(id)
+            let tagDiv = element.getElementsByTagName("div")[0];
+            console.log(tagDiv)
+            let tagP = element.getElementsByTagName("p");
+            if(tagP[0].style.display === "none") {
+                tagP[0].style.display = "block";
+                tagP[1].style.display = "none";
+                // tagDiv.className = tagDiv.className.replace(" w3-padding-16", "")
+            }
+            else {
+                tagP[0].style.display = "none";
+                tagP[1].style.display = "block";
+                // tagDiv.className += " w3-padding-16"
+            }
+        }
+    </script>
 </body>
 
 </html>
