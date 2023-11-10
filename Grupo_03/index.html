@@ -166,7 +166,8 @@
 
                     <p>
                         Os quadros que atravessam as RBridges precisam receber o cabeçalho do protocolo TRILL, chamado
-                        de TRILL Header, além do cabeçalho de link local. De uma forma geral, o primeiro RBridge que um
+                        de TRILL Header. O protocolo ethernet (inner frame) recebe o TRILL Header e é encapsulado por um
+                        outro cabeçalho ethernet (outer frame). De uma forma geral, o primeiro RBridge que um
                         quadro unicast encontra, encapsula esse quadro recebido com um cabeçalho TRILL que especifica o
                         último RBridge onde o quadro será desencapsulado. Para economizar espaço no cabeçalho TRILL e
                         simplificar as pesquisas de encaminhamento, um protocolo dinâmico de aquisição de apelidos é
@@ -205,7 +206,8 @@
 
                     <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
                         <b>Tamanho da Opção:</b> É um campo de 5 bits que fornece o comprimento das opções do cabeçalho
-                        TRILL em unidades de 4 bytes, ou seja, permite até 124 bytes na área de opções. Se o campo for
+                        TRILL em unidades de 4 bytes, ou seja, permite até 124 bytes na área de opções (4 bytes são
+                        pulados para encontrar o inner frame). Se o campo for
                         zero, não há opções presentes e se as opções estiverem presentes, elas seguem imediatamente após
                         o campo Ingress Rbridge.
                     </p>
