@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inconsolata">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <style>
         body,
         html {
@@ -99,21 +100,16 @@
             <div class="w3-content w3-padding-48" style="max-width:900px">
                 <h2 class="w3-center"><span class="w3-wide"><b>O Protocolo</b></span></h2>
                 <hr style="width:100px;border:5px solid black" class="w3-round">
-                <p>
-                    O segredo por trás desse protocolo é trazer de volta uma específica inteligência de roteador chamado
+                <p>O segredo por trás desse protocolo é trazer de volta uma específica inteligência de roteador chamado
                     IS-IS (Intermediate System to Intermediate System) que é um protocolo de roteador particular que
                     perdeu lugar para o OSPF (Open Shortest Path First). Muitos dizem que o TRILL é um roteamento de
                     endereço MAC movendo tráfego de switch para switch utilizando a tecnologia de caminho mais curto que
                     é encontrado no IS-IS. Esse protocolo foi escolhido pois ele roda na camada 2 e, portanto, não é
                     necessário configurar os roteadores IS-IS com endereços IP para se configurarem entre eles. Além
-                    disso, o cabeçalho é de tamanho flexível, chamado de TLV (Type-Legth-Value), sendo um protocolo de
+                    disso, o cabeçalho é de tamanho flexível, chamado de TLV (Type-Length-Value), sendo um protocolo de
                     fácil extensão. Todos os enlaces estão conectados e ativos, não tendo nenhum bloqueio com roteamento
                     na camada 2, graças a esse protocolo.
                 </p>
-                <!-- <img src="./img/computer_networking.jpg" style="width:100%;max-width:1000px" class="w3-margin-top">
-                <p><strong>Opening hours:</strong> everyday from 6am to 5pm.</p>
-                <p><strong>Address:</strong> 15 Adr street, 5015, NY</p> -->
-
                 <div class="w3-content" style="max-width:900px">
                     <h5 class="w3-center w3-padding-24"><span class="w3-wide"><b>RBridges</b></span></h5>
                     <p>
@@ -127,25 +123,204 @@
                         clássicas, como o protocolo Spanning Tree, têm o efeito indesejado de desativar caminhos
                         redundantes na rede para evitar loops, reduzindo assim a utilização do enlace e a
                         disponibilidade. RBridges foram introduzidos para abordar essas deficiências.
+                    </p>
+                    <p>
                         Diferentemente do Spanning Tree, que desativa links redundantes, o protocolo TRILL permite que
                         os RBridges utilizem todos os caminhos disponíveis para roteamento. Isso não apenas aumenta a
-                        eficiência da largura de banda, mas tamb
-
+                        eficiência da largura de banda, mas também melhora a resiliência da rede, já que há múltiplos
+                        caminhos entre qualquer par de nós.
+                    </p>
+                    <p>
+                        As RBridges funcionam utilizando o protocolo TRILL para criar um mapa da rede, permitindo que
+                        cada RBridge conheça
+                        a topologia da rede inteira. Isso é essencial para rotear pacotes de maneira mais eficiente e
+                        aproveitar todas as rotas disponíveis. A operação básica de um RBridge inclui o encapsulamento,
+                        roteamento e desencapsulamento de quadros Ethernet, melhorando assim o fluxo de dados dentro da
+                        rede.
+                    </p>
+                    <p> As suas principais características são:</p>
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>Utilização de Link Eficiente:</b> Todos os caminhos entre os nós são utilizáveis, otimizando
+                        a
+                        largura de banda.
+                    </p>
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>Roteamento Inteligente:</b> Com conhecimento completo da topologia, os RBridges podem
+                        determinar o
+                        caminho mais curto para cada destino, através da tecnologia do menor caminho.
+                    </p>
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>Alta Disponibilidade:</b> RBridges permitem um balanceamento de carga mais eficaz, tornando a
+                        rede
+                        mais resiliente a falhas e gargalos.
+                    </p>
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>Compatibilidade:</b> RBridges podem ser introduzidos em uma rede existente sem a necessidade
+                        de
+                        alterar a infraestrutura já existente.
                     </p>
 
                 </div>
                 <div class="w3-content" style="max-width:900px">
                     <h5 class="w3-center w3-padding-24"><span class="w3-wide"><b>Cabeçalho</b></span></h5>
 
+                    <p>
+                        Os quadros que atravessam as RBridges precisam receber o cabeçalho do protocolo TRILL, chamado
+                        de TRILL Header, além do cabeçalho de link local. De uma forma geral, o primeiro RBridge que um
+                        quadro unicast encontra, encapsula esse quadro recebido com um cabeçalho TRILL que especifica o
+                        último RBridge onde o quadro será desencapsulado. Para economizar espaço no cabeçalho TRILL e
+                        simplificar as pesquisas de encaminhamento, um protocolo dinâmico de aquisição de apelidos é
+                        executado entre os RBridges para selecionar apelidos de 16 bits para RBridges que são usados
+                        para especificar os RBridges de entrada e saída no cabeçalho TRILL.
+                    </p>
+                    <p>
+                        A seguir, iremos ver cada campo do cabeçalho de forma mais detalhada.
+                    </p>
+
                     <img src="./img/cabecalho1.png" style="width:100%;max-width:1000px; border:2px solid black"
                         class="w3-margin-top">
 
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>Versão:</b> É um campo de 2 bits onde um RBridge deve verificar esse campo em um quadro
+                        encapsulado TRILL recebido. Se esse campo tiver um valor não reconhecido pelo RBridge, então
+                        este deve descartar silenciosamente o quadro.
+                    </p>
+
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>Reservado:</b> É um campo de 2 bits que são reservados para uso futuro em extensões do
+                        protocolo. Eles devem ser definidos como zero quando o cabeçalho TRILL é adicionado por um
+                        RBridge de entrada, mas ignorado por RBridges de trânsito e ignorado por RBridges de saída.
+                    </p>
+
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>Multi Destinação:</b> É um campo de 1 bit que indica que o quadro deve ser entregue a uma
+                        classe de estações finais de destino através de uma árvore de distribuição e que o campo RBridge
+                        de saída específica esta árvore.
+                    </p>
+                    <p style="margin-left: 50px;">
+                        Se o bit for igual a 0, o RBridge de saída contém um valor de saída para um endereço MAC unicast
+                        conhecido.Se o bit for igual a 1, o RBridge de saída contém um valor que especifica uma árvore
+                        de distribuição.
+                    </p>
+
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>Tamanho da Opção:</b> É um campo de 5 bits que fornece o comprimento das opções do cabeçalho
+                        TRILL em unidades de 4 bytes, ou seja, permite até 124 bytes na área de opções. Se o campo for
+                        zero, não há opções presentes e se as opções estiverem presentes, elas seguem imediatamente após
+                        o campo Ingress Rbridge.
+                    </p>
+
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>Contagem de Saltos:</b> É um campo de 6 bit em que um Rbridge descarta quadros recebidos com
+                        uma contagem de saltos zero, caso contrário, diminui a contagem de saltos.
+                    </p>
+
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>RBridge de Saída:</b> É um campo de 16 bits que ajuda na identificação de uma estação RBridge
+                        de origem no processo de encaminhamento de pacotes. Esse campo refere-se a estação RBridge de
+                        destino que receberá o pacote.
+                    </p>
+                    <p style="margin-left: 50px;">
+                        Ao receber um pacote, o RBridge usa o valor do RBridge de Saída para determinar a próxima etapa
+                        do encaminhamento do pacote. Isso garante que o pacote seja encaminhado corretamente ao longo do
+                        caminho mais eficiente em direção ao seu destino.
+                    </p>
+
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>RBridge de Entrada:</b> É um campo de 16 bits que se refere à estação que inicialmente
+                        introduz o pacote na rede TRILL. Esse valor ajuda os outros dispositivos TRILL a identificar de
+                        onde o pacote se originou e a traçar seu caminho por meio da rede.
+
+                    </p>
+                    <p style="margin-left: 50px;">
+                        O RBridge de Entrada desempenha um papel fundamental na prevenção de loops e garantindo que os
+                        pacotes sejam encaminhados de maneira eficiente.
+                    </p>
+
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        <b>Opção:</b> É um campo opcional de 32 bits. Para garantir uma operação segura e compatível com
+                        versões anteriores, quando esse campo for diferente de zero, indicando que opções estão
+                        presentes, os dois bits superiores do primeiro byte da área de opções são especificados da
+                        seguinte forma:
+                    </p>
+
                     <img src="./img/cabecalho2.png" style="width:100%;max-width:1000px; border:2px solid black"
                         class="w3-margin-top">
+
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        Se o bit <b>CHbH (Critical Hop-by-Hop)</b> for 1, uma ou mais opções críticas hop-by-hop estarão
+                        presentes. Se o bit CHbH for 0, o quadro é seguro, do ponto de vista do processamento de opções,
+                        para um RBridge de trânsito encaminhar para frente.
+                    </p>
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        Se o bit <b>CItE (Critical Ingress-to-Egress)</b> for 1, uma ou mais opções críticas de entrada
+                        para
+                        saída estarão presentes. Se for 0, tais opções não estão presentes.
+                    </p>
+                    <p style="margin-left: 50px;">
+                        Se CHbH ou CItE for diferente de zero, um RBridge que não suporta nenhuma opção deve descartar o
+                        quadro.
+                    </p>
+                    <p style="margin-left: 50px;"><i class="fa fa-bookmark-o w3-xlarge"></i>
+                        Os bits <b>Reserved</b> incluem provisões para opções salto a salto e de entrada para saída, bem
+                        como
+                        opções críticas e não críticas.
+
+                    </p>
                 </div>
                 <div class="w3-content" style="max-width:900px">
                     <h5 class="w3-center w3-padding-24"><span class="w3-wide"><b>Funcionamento</b></span></h5>
+                    <p>
+                        O TRILL tem a ideia de ser compatível com uma ponte ou com as RBridges, de maneira que a rede se
+                        comporte exatamente como antes e ainda construa caminhos melhores para os pacotes, com menos
+                        loops e mais confiabilidade, e fazer isto sem exigir mais configurações.
+                    </p>
+                    <p>
+                        É necessário que seja usado um protocolo de estado do enlace para o funcionamento do TRILL, e a
+                        escolha foi o IS-IS (Intermediate System - Intermediate System). Isto se deve ao fato de ser
+                        mais simples e permitir que campos sejam adicionados sem muita dificuldade. E além disso ele
+                        trabalha na camada 2 e não requer que sejam definidos endereços IP para os roteadores na rede.
+                        Funciona da seguinte forma: você descobre quem são os roteadores vizinhos, cada um constrói um
+                        LSP (Link State Package) que contém o nó raíz e os vizinhos deste nó, e envia para todos os
+                        roteadores. Todos os roteadores na rede têm que armazenar o último LSP recebido de cada nó.Desta
+                        maneira você conhece a topologia da rede completa. Assim é utilizado um algoritmo para computar
+                        os caminhos dada essa topologia.
+                    </p>
+                    <p>
+                        Para economizar espaço no cabeçalho, o nome das RBridges não têm endereços de 6 bytes e sim um
+                        de 2 bytes escolhido dinamicamente através de um algoritmo que roda no protocolo de estado do
+                        enlace. A escolha é aleatória e compara com os nomes dos outros nós na rede para certificar que
+                        não existam dois nós com o mesmo nome.
+                    </p>
+                    <p>
+                        O pacote no TRILL é encapsulado dentro de um cabeçalho Ethernet, já que a ideia é substituir as
+                        pontes para as RBridges. Caso um pacote saia de uma RBridge e chegue numa ponte comum, ela
+                        saberá o que fazer com este pacote.
+                    </p>
+                    <p>
+                        Com estas definições os pacotes são encaminhados assim como seriam numa rede comum com
+                        roteadores, a diferença é que ao invés de um endereço IP, o próximo pulo é o nome de uma
+                        RBridge.
+                    </p>
+                    <p>
+                        Um problema enfrentado é que seria ruim se houvesse duas RBridges encapsulando e desencapsulando
+                        os pacotes, pois isso poderia causar loops. Então para se certificar que só tenha uma RBridge
+                        que faça isso, uma delas é designada para fazer este trabalho. O IS-IS já tem uma escolha de
+                        roteador designado construído no protocolo e isto é utilizado para criar uma RBridge designada
+                        também.
+                    </p>
+                    <p>
+                        A RBridge aprende os nós de destino através dos pacotes de dados recebidos e monta suas árvores
+                        geradoras. Com essas árvores geradoras, a primeira RBridge escolhe a árvore pela qual vai mandar
+                        os pacotes e especifica através do campo Egress RBRidge do cabeçalho. A quantidade de árvores
+                        geradoras que cada RBridge terá, é definida por cada uma delas, porém a RBridge de maior
+                        prioridade diz para todas as outras que elas só usarão 8 árvores. Estas 8 árvores são ranqueadas
+                        de acordo com a prioridade e ID que toda RBridge possui. No caso de multicast é possível passar
+                        parâmetros para um algoritmo que permite que essas 8 árvores sejam selecionadas através de quão
+                        próximo a raíz da próxima RBridge está do nó atual, e podem ser escolhidas as melhores rotas a
+                        partir disto.
 
+                    </p>
                 </div>
 
             </div>
@@ -157,6 +332,32 @@
 
                 <h2 class="w3-center"><span class="w3-wide"><b>Utilização</b></span></h2>
                 <hr style="width:100px;border:5px solid black" class="w3-round">
+
+                <p>
+                    O protocolo TRILL é empregado em diversos cenários de rede onde a escalabilidade e eficiência de
+                    utilização da largura de banda são críticas. Empresas que gerenciam grandes centros de dados são
+                    usuários frequentes do TRILL, pois ele permite um uso mais eficiente da infraestrutura existente,
+                    evitando gargalos e facilitando o gerenciamento de tráfego de rede. Os fabricantes de equipamentos
+                    de rede, como switches e roteadores, também integram o protocolo TRILL em seus produtos,
+                    proporcionando aos clientes uma solução pronta para redes de alta densidade e com múltiplos
+                    caminhos.
+                </p>
+                <p>
+                    Além disso, o protocolo é bastante adotado em ambientes de cloud computing e serviços de
+                    armazenamento que necessitam de alta disponibilidade e resiliência. O TRILL é ideal para garantir a
+                    redundância de caminhos e evitar pontos únicos de falha em redes complexas.
+                </p>
+                <p>
+                    No contexto acadêmico e de pesquisa, o TRILL é objeto de estudo para otimização de algoritmos de
+                    roteamento e segurança de rede. Universidades e institutos de pesquisa exploram o protocolo para
+                    desenvolver novas metodologias de roteamento e segurança que possam ser aplicadas em larga escala.
+                </p>
+                <p>
+                    Em termos de setores industriais, empresas de telecomunicações e provedores de serviços de internet
+                    recorrem ao TRILL para melhorar a eficiência de suas redes, o que é crucial para suportar o
+                    crescente tráfego de dados e a demanda por serviços de banda larga mais rápidos e confiáveis.
+
+                </p>
             </div>
         </div>
 
@@ -166,6 +367,20 @@
 
                 <h2 class="w3-center"><span class="w3-wide"><b>Conclusão</b></span></h2>
                 <hr style="width:100px;border:5px solid black" class="w3-round">
+
+                <p>
+                    O protocolo TRILL (Transparent Interconnection of Lots of Links) representa uma inovação crucial na
+                    gestão de redes Ethernet de camada 2. Ele supera as limitações dos protocolos tradicionais, como o
+                    Spanning Tree Protocol (STP), ao incorporar o roteamento eficiente do Intermediate System to
+                    Intermediate System (IS-IS). Isso permite o uso de todos os caminhos disponíveis na rede, eliminando
+                    o desperdício de largura de banda e melhorando a resiliência. As RBridges (Routing Bridges)
+                    desempenham um papel fundamental no funcionamento do TRILL, permitindo que as redes Ethernet se
+                    adaptem às crescentes demandas de complexidade e tamanho, aproveitando efetivamente os links
+                    disponíveis e mantendo a compatibilidade com infraestruturas existentes. O cabeçalho TRILL fornece
+                    informações essenciais para o encaminhamento eficiente de pacotes, garantindo uma operação segura e
+                    eficaz. Em resumo, o TRILL e as RBridges representam uma solução moderna e eficaz para as redes
+                    Ethernet de hoje, superando desafios de escalabilidade e eficiência de largura de banda.
+                </p>
 
             </div>
         </div>
@@ -179,46 +394,12 @@
 
                 <div class="w3-container">
                     <h5 class="w3-opacity"><b>P1. Qual era a desvantagem do protocolo STP que resultou na criação do
-                        protocolo TRILL?</b></h5>
-                    <div onclick="openMenu(event, 'Q1');" id="Q1" style="cursor: pointer;">
-                        <div class="w3-card" style="background-color: #f1f1f1;">
-                            <p style="display: none; padding: 16px;">R: No STP o enlace bloqueado acabava sendo uma largura de banda desperdiçada, ou seja,
-                                que era paga e não era utilizada. Já com o TRILL, é aproveitado a largura de banda de
-                                todos os enlaces.
-                            </p>
-                            <p class="w3-center" style="padding: 16px;"><b>Resposta</b></p>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-                <div class="w3-container">
-                    <h5 class="w3-opacity"><b>P2.</b></h5>
-                    <div onclick="openMenu(event, 'Q2');" id="Q2" style="cursor: pointer;">
-                        <div class="w3-card" style="background-color: #f1f1f1;">
-                            <p style="display: none; padding: 16px;">R:
-                            </p>
-                            <p class="w3-center" style="padding: 16px;"><b>Resposta</b></p>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-                <div class="w3-container">
-                    <h5 class="w3-opacity"><b>P3.</b></h5>
-                    <div onclick="openMenu(event, 'Q3');" id="Q3" style="cursor: pointer;">
-                        <div class="w3-card" style="background-color: #f1f1f1;">
-                            <p style="display: none; padding: 16px;">R:
-                            </p>
-                            <p class="w3-center" style="padding: 16px;"><b>Resposta</b></p>
-                        </div>
-                    </div>
-                    <hr>
-                </div>
-                <div class="w3-container">
-                    <h5 class="w3-opacity"><b>P4. Qual era a desvantagem do protocolo STP que resultou na criação do
                             protocolo TRILL?</b></h5>
-                    <div onclick="openMenu(event, 'Q4');" id="Q4" style="cursor: pointer;">
+                    <div onclick="toggleButton(event, 'Q1');" id="Q1" style="cursor: pointer;">
                         <div class="w3-card" style="background-color: #f1f1f1;">
-                            <p style="display: none; padding: 16px;">R:
+                            <p style="display: none; padding: 16px;">R: No STP o enlace bloqueado acabava sendo uma
+                                largura de banda desperdiçada, ou seja, que era paga e não era utilizada. Já com o
+                                TRILL, é aproveitado a largura de banda de todos os enlaces.
                             </p>
                             <p class="w3-center" style="padding: 16px;"><b>Resposta</b></p>
                         </div>
@@ -226,10 +407,54 @@
                     <hr>
                 </div>
                 <div class="w3-container">
-                    <h5 class="w3-opacity"><b>P5. </b></h5>
-                    <div onclick="openMenu(event, 'Q5');" id="Q5" style="cursor: pointer;">
+                    <h5 class="w3-opacity"><b>P2. Quais são as operações básicas em um quadro Ethernet no RBridge e qual
+                            a importância dessa sequência de operações?</b></h5>
+                    <div onclick="toggleButton(event, 'Q2');" id="Q2" style="cursor: pointer;">
                         <div class="w3-card" style="background-color: #f1f1f1;">
-                            <p style="display: none; padding: 16px;">R: No
+                            <p style="display: none; padding: 16px;">R: Encapsulamento, roteamento e desencapsulamento
+                                de quadros Ethernet, melhorando assim o fluxo de dados dentro da rede.
+                            </p>
+                            <p class="w3-center" style="padding: 16px;"><b>Resposta</b></p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="w3-container">
+                    <h5 class="w3-opacity"><b>P3. Cite os dois motivos pelo qual foi utilizado o protocolo IS-IS no
+                            TRILL.</b></h5>
+                    <div onclick="toggleButton(event, 'Q3');" id="Q3" style="cursor: pointer;">
+                        <div class="w3-card" style="background-color: #f1f1f1;">
+                            <p style="display: none; padding: 16px;">R: Roda na camada 2 e, portanto, não é necessário
+                                configurar os roteadores IS-IS com endereços IP para se configurarem entre eles. E o
+                                cabeçalho é de tamanho flexível, chamado de TLV (Type-Legth-Value), sendo um protocolo
+                                de fácil extensão.
+                            </p>
+                            <p class="w3-center" style="padding: 16px;"><b>Resposta</b></p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="w3-container">
+                    <h5 class="w3-opacity"><b>P4. Cite dois tipos de organizações que utilizam protocolo TRILL?</b></h5>
+                    <div onclick="toggleButton(event, 'Q4');" id="Q4" style="cursor: pointer;">
+                        <div class="w3-card" style="background-color: #f1f1f1;">
+                            <p style="display: none; padding: 16px;">R: Fabricantes de equipamentos de rede e empresas
+                                de telecomunicações.
+                            </p>
+                            <p class="w3-center" style="padding: 16px;"><b>Resposta</b></p>
+                        </div>
+                    </div>
+                    <hr>
+                </div>
+                <div class="w3-container">
+                    <h5 class="w3-opacity"><b>P5. Como as RBridges contribuem para melhorar a eficiência e resiliência
+                            das redes Ethernet ao operar em conjunto com o protocolo TRILL?</b></h5>
+                    <div onclick="toggleButton(event, 'Q5');" id="Q5" style="cursor: pointer;">
+                        <div class="w3-card" style="background-color: #f1f1f1;">
+                            <p style="display: none; padding: 16px;">R: As RBridges permitem que as redes Ethernet
+                                aproveitem ao máximo os caminhos disponíveis eliminando as limitações de protocolos
+                                tradicionais. O TRILL permite que as RBridges usem todos os caminhos disponíveis para
+                                roteamento.
                             </p>
                             <p class="w3-center" style="padding: 16px;"><b>Resposta</b></p>
                         </div>
@@ -274,9 +499,6 @@
                         suspensão;"</i></p>
             </div>
         </div>
-
-
-
         <!-- End page content -->
     </div>
 
@@ -288,21 +510,18 @@
         <p>Matheus Guimarães de Moura</p>
     </footer>
     <script>
-        // Tabbed Menu
-        function openMenu(evt, id) {
+        function toggleButton(evt, id) {
             let element = document.getElementById(id)
             let tagDiv = element.getElementsByTagName("div")[0];
             console.log(tagDiv)
             let tagP = element.getElementsByTagName("p");
-            if(tagP[0].style.display === "none") {
+            if (tagP[0].style.display === "none") {
                 tagP[0].style.display = "block";
                 tagP[1].style.display = "none";
-                // tagDiv.className = tagDiv.className.replace(" w3-padding-16", "")
             }
             else {
                 tagP[0].style.display = "none";
                 tagP[1].style.display = "block";
-                // tagDiv.className += " w3-padding-16"
             }
         }
     </script>
